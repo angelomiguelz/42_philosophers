@@ -6,7 +6,7 @@
 #    By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/28 17:00:30 by marvin            #+#    #+#              #
-#    Updated: 2023/08/08 11:11:49 by mzarichn         ###   ########.fr        #
+#    Updated: 2023/09/07 08:58:54 by mzarichn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,13 @@ NAME = philosophers
 
 CC = gcc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 SRC_PATH = ./
 
 OBJ_PATH = ./objects
 
-SRC_NAME = philosophers.c init.c
+SRC_NAME = philosophers.c init.c utils.c
 
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
 

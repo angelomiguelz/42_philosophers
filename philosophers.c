@@ -6,69 +6,48 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:30:12 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/08/08 11:13:10 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/09/07 16:06:43 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+t_data	*data(void)
+{
+	static t_data	data;
+
+	return (&data);
+}
 
 void philosophers()
 {
     printf("TUA MAE\n");
 }
 
-long int	ft_atoi(const char *str)
+void	_allocation(void)
 {
-	int		i;
-	int		neg;
-	long	res;
+	int i;
 
-	i = 0;
-	neg = 1;
-	res = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			neg *= -1;
-		i++;
-	}
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
-	{
-		if (res * 10 < -2147483648 || res * 10 > 2147483647)
-			return (21474836473);
-		res = res * 10 + str[i] - 48;
-		i++;
-	}
-	return (res * neg);
+	i = -1;
 }
 
-int	check_input(char **av)
+void	_create_philos(void)
 {
-	int i = 0;
-	int j;
-	while (av[++i])
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (av[i][j] < '0' || av[i][j] > '9')
-				if (av[i][j] != ' ')
-					return (1);
-			j++;
-		}
-	}
-	return (0);
+	
 }
 
 int main(int ac, char **av)
 {
 	t_data *data;
 
+	data = NULL;
     if (ac < 5 || ac > 6)
-		printf("\n");
+	{
+		printf("Input Error\n");
+		return (0);
+	}
 	if (check_input(av))
-		printf("Erro");
-	_init(ac, av, data);
+		printf("Input Error");
+	_init(ac, av);
+	_create_philos();
 }

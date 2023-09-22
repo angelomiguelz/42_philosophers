@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:30:12 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/09/07 16:06:43 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/09/19 09:59:33 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int main(int ac, char **av)
     if (ac < 5 || ac > 6)
 	{
 		printf("Input Error\n");
-		return (0);
+		return (1);
 	}
 	if (check_input(av))
 		printf("Input Error");

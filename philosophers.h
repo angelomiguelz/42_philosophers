@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:35:08 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/09/07 16:12:29 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:07:14 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,40 @@
 
 struct	s_data;
 
+typedef struct s_death
+{
+	int				dead;
+	pthread_mutex_t	lock;
+}				t_death;
+
 typedef struct s_fork
 {
-	int				id;
+	int				taken;
 	pthread_mutex_t fork;
 }				t_fork;
 
-typedef struct s_philo
-{
-	pthread_t		thread1;
-	int				id;
-	int				eat_cont;
-	int				eating;
-	long			time_to_die;
-}	t_philo;
-
 typedef struct s_data
 {
-	t_philo			*philos;
 	long			philo_num;
-	long				meals_nb;
+	long			meals_nb;
 	long			death_time;
 	long			eat_time;
 	long			sleep_time;
 	long			start_time;
-	pthread_mutex_t	dead;
+	t_death			death;
 	pthread_mutex_t	write;
 }	t_data;
+
+typedef struct s_philo
+{
+	t_data			*data;
+	t_fork			*forks;
+	pthread_t		philo;
+	int				id;
+	int				eat_cont;
+	int				last_meal;
+}	t_philo;
+
 
 t_data	*data(void);
 
@@ -54,9 +61,9 @@ int _init(int ac, char **av);
 
 //utils
 int	error(char *str);
-int	check_input(char **av);
+int	check_input(int ac, char **av);
 long int	ft_atoi(const char *str);
-void	ft_calloc(size_t nitems, size_t size);
+void	*ft_calloc(size_t nitems, size_t size);
 
 //
 

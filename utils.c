@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 08:49:44 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/09/07 16:12:53 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:07:07 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,16 @@ int	error(char *str)
 	return (1);
 }
 
-int	check_input(char **av)
+int	check_input(int ac, char **av)
 {
 	int i = 0;
 	int j;
+
+	if (ac < 5 || ac > 6)
+	{
+		printf("Input Error\n");
+		return (1);
+	}
 	while (av[++i])
 	{
 		j = 0;
@@ -64,7 +70,7 @@ long int	ft_atoi(const char *str)
 	return (res * neg);
 }
 
-void	ft_calloc(size_t nitems, size_t size)
+void	*ft_calloc(size_t nitems, size_t size)
 {
 	void	*ptr;
 	size_t	i;

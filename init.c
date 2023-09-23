@@ -6,19 +6,14 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:11:53 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/09/19 10:04:11 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:06:55 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void allocation(void)
-{
-}
-
 int _init(int ac, char **av)
 {
-	int res = 0;
 	data()->philo_num = ft_atoi(av[1]);
 	data()->death_time = ft_atoi(av[2]);
 	data()->eat_time = ft_atoi(av[3]);
@@ -31,8 +26,6 @@ int _init(int ac, char **av)
 		|| data()->eat_time < 0 || data()->sleep_time < 0)
 		return (error("Input Error Limits"));
 	pthread_mutex_init(&data()->write, NULL);
-	
-	allocation();
 	
 	return (0);
 }

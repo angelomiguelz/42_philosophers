@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:30:12 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/09/19 09:59:33 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:06:34 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,13 @@ t_data	*data(void)
 	return (&data);
 }
 
-void philosophers()
-{
-    printf("TUA MAE\n");
-}
-
-void	_allocation(void)
-{
-	int i;
-
-	i = -1;
-}
-
-void	_create_philos(void)
-{
-	
-}
-
 int main(int ac, char **av)
 {
 	t_data *data;
 
 	data = NULL;
-    if (ac < 5 || ac > 6)
-	{
-		printf("Input Error\n");
-		return (1);
-	}
-	if (check_input(av))
+	(void)data;
+	if (check_input(ac, av))
 		printf("Input Error");
 	_init(ac, av);
-	_create_philos();
 }

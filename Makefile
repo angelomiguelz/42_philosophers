@@ -20,7 +20,7 @@ SRC_PATH = ./
 
 OBJ_PATH = ./objects
 
-SRC_NAME = philosophers.c init.c utils.c
+SRC_NAME = philosophers.c checker.c time.c init.c
 
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
 

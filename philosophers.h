@@ -14,61 +14,85 @@
 # define PHILOSOPHERS_H
 
 # include <stdio.h>
+# include <string.h>
+# include <unistd.h>
 # include <stdlib.h>
-# include <stdbool.h>
 # include <pthread.h>
-# include <sys/time.h>
 # include <limits.h>
+# include <sys/time.h>
+# include <stdint.h>
+# include <unistd.h>
+# include <stddef.h>
+#include <stdbool.h>
 
-struct	s_data;
+/*
+** Routines messages
+*/
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define FORK "has taken a fork"
+# define DIED "died ☠️"
 
-typedef struct s_death
-{
-	int				dead;
-	pthread_mutex_t	lock;
-}				t_death;
+/*
+** Colors
+*/
+# define RESET "\e[0m"
+# define PINK "\e[0;38;5;199m"
+# define GREEN "\e[0;32m"
+# define BLUE "\e[0;34m"
+# define G_BLUE "\e[0;38;5;24m"
+# define B_BLUE "\e[1;34m"
+# define G_CYAN "\e[0;38;5;44m"
 
 typedef struct s_fork
 {
 	int				taken;
-	pthread_mutex_t fork;
+	pthread_mutex_t lock;
 }				t_fork;
 
-typedef struct s_data
+typedef struct s_philosopher
 {
-	long			philo_num;
-	long			death_time;
-	long			eat_time;
-	long			sleep_time;
-	long			start_time;
-	long			meals_nb;
-	t_death			death;
-	pthread_mutex_t	write;
-}	t_data;
-
-typedef struct s_philo
-{
-	t_data			*data;
 	t_fork			*forks;
 	pthread_t		philo;
 	int				id;
-	int				eat_cont;
+	int				eaten_meals;
 	int				last_meal;
-}	t_philo;
+}	t_philosopher;
+
+typedef struct s_info
+{
+	long			n_philos;
+	u_int64_t		time_to_die;
+	u_int64_t		time_to_eat;
+	u_int64_t		time_to_sleep;
+	long			must_eat;
+	u_int64_t		start_time;
+	int				dead;
+	pthread_mutex_t	death_lock;
+	pthread_mutex_t	write;
+	t_philosopher	*philo;
+}	t_info;
 
 
-t_data	*data(void);
-t_death *death(void);
-t_philo	*philo(void);
 
-int _init(int ac, char **av);
+
+t_info	*data(void);
+t_philosopher	*philo(void);
+
+int init_data(int ac, char **av);
 
 //utils
-int	error(char *str);
-int	check_input(int ac, char **av);
+int			error(char *str);
+int			check_input(int ac, char **av);
 long int	ft_atoi(const char *str);
-void	*ft_calloc(size_t nitems, size_t size);
+void		*ft_calloc(size_t nitems, size_t size);
 
-//
+//time functions
+u_int64_t get_time(void);
+
+
+int	start();
+
 
 #endif

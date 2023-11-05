@@ -70,30 +70,32 @@ bool	if_is_dead()
 	return (false);
 }
 
-int	alloc(t_philosopher *philos, t_fork *fork)
+int	alloc(t_philosopher **philos, t_fork **fork)
 {
 	int i = -1;
-	philos = (t_philosopher *)malloc(sizeof(t_philosopher) * data()->n_philos);
+	(*philos) = (t_philosopher *)malloc(sizeof(t_philosopher) * data()->n_philos);
 	if (!philos)
-		return (false);
+		return (1);
+	(*fork) = (t_fork *)malloc(sizeof(t_fork) * data()->n_philos);
+	if (!(*fork))
+		return (1);
 	while (++i < data()->n_philos)
 	{
-		philos[i].id = i + 1;
-		philos[i].eaten_meals = 0;
-		philos[i].last_meal = get_time();
-		philos[i].forks = fork;
+		(*philos)[i].id = i + 1;
+		(*philos)[i].eaten_meals = 0;
+		(*philos)[i].last_meal = get_time();
+		(*philos)[i].forks = (*fork);
 	}
-	fork = (t_fork *)malloc(sizeof(t_fork) * data()->n_philos);
-	if (!fork)
-		return (false);
 	i = -1;
 	while (++i < data()->n_philos)
 	{
-		fork->taken = false;
-		if (pthread_mutex_init(&fork[i].lock, NULL))
-			return (false);
+		(*fork)->taken = false;
+		if (pthread_mutex_init(&(*fork)[i].lock, NULL))
+			return (1);
 	}
-	return (true);
+	if (philos == NULL)
+		printf("SECOND NULL\n");
+	return (0);
 }
 
 
@@ -191,13 +193,13 @@ int	thread_starter(t_philosopher *philos)
 	while (++i < data()->n_philos)
 	{
 		if (pthread_create(&philos[i].philo, NULL, &routine, &philos[i]))
-			return (false);
+			return (1);
 	}
 	i = -1;
 	while (++i < data()->n_philos)
 		if (pthread_join(philos[i].philo, NULL))
-			return (false);
-	return (true);
+			return (1);
+	return (0);
 }
 
 int main(int ac, char **av)
@@ -206,12 +208,21 @@ int main(int ac, char **av)
 	t_fork		*forks = NULL;
 
 	if (check_input(ac, av))
+	{
 		return (1);
+	}
 	if (init_data(ac, av))
+	{
 		return (1);
-	if (alloc(philos, forks))
+	}
+	if (alloc(&philos, &forks))
+	{ 
+		printf("RETURNED\n");
 		return (1);
+	}
 	if (thread_starter(philos))
+	{
 		return (1);
+	}
 	return (0);
 }

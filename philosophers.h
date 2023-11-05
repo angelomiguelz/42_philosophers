@@ -74,7 +74,10 @@ typedef struct s_info
 	t_philosopher	*philo;
 }	t_info;
 
-
+//# define DEFAULT "\033[0;39m"
+# define RED "\033[0;91m"
+//# define GREEN "\033[0;92m"
+# define YELLOW "\033[0;93m"
 
 
 t_info	*data(void);
@@ -89,8 +92,7 @@ long int	ft_atoi(const char *str);
 void		*ft_calloc(size_t nitems, size_t size);
 
 //time functions
-u_int64_t get_time(void);
-
+int	get_time(void);
 
 int	start();
 

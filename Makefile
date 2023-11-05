@@ -26,11 +26,6 @@ OBJS = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
 
 SRC = $(addprefix $(SRC_PATH)/, $(SRC_NAME))
 
-DEFAULT = \033[0;39m
-RED = \033[0;91m
-GREEN = \033[0;92m
-YELLOW = \033[0;93m
-
 all: $(NAME)
 
 $(NAME) : $(OBJS)

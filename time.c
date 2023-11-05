@@ -1,10 +1,9 @@
 #include "philosophers.h"
 
-u_int64_t get_time(void)
+int	get_time(void)
 {
-    struct timeval tv;
+	struct timeval	curr_time;
 
-    if (gettimeofday(&tv, NULL))
-        return (0);
-    return ((u_int64_t)(tv.tv_sec * 1000) + (u_int64_t)(tv.tv_usec / 1000));
+	gettimeofday(&curr_time, NULL);
+	return ((curr_time.tv_sec * 1000) + (curr_time.tv_usec / 1000));
 }

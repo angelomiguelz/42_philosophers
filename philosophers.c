@@ -24,19 +24,20 @@ int	ft_exit(void)
 	return (1);
 }
 
-void	messager(t_philosopher *philo, char *msg)
+void	messager(t_philosopher *philo, char *msg, char *color)
 {
 	pthread_mutex_lock(&data()->write);
-	printf("%llu %d %s\n", get_time() - data()->start_time, philo->id, msg);
+	printf("%s%llu %d %s\n", color, get_time() - data()->start_time, philo->id, msg);
 	pthread_mutex_unlock(&data()->write);
 }
 
 int	check_death(t_philosopher *philo)
 {
 	pthread_mutex_lock(&data()->death_lock);
-	if (get_time() - philo->last_meal >= data()->time_to_die)
+	//printf("last meal: %d\n", philo->last_meal);
+	if (get_time() - (uint64_t)philo->last_meal >= data()->time_to_die)
 	{
-		messager(philo, "died");
+		messager(philo, "died", RED);
 		data()->dead = true;
 		pthread_mutex_unlock(&data()->death_lock);
 		return (true);
@@ -102,7 +103,7 @@ int	alloc(t_philosopher **philos, t_fork **fork)
 
 void	think(t_philosopher *philo)
 {
-	messager(philo, "is thinking");
+	messager(philo, "is thinking", PINK);
 }
 
 
@@ -132,7 +133,7 @@ void	lock_fork(t_fork *fork, t_philosopher *philo)
 		{
 			fork->taken = true;
 			pthread_mutex_unlock(&fork->lock);
-			messager(philo, "has taken a fork");
+			messager(philo, "has taken a fork", B_BLUE);
 			break ;
 		}
 		else
@@ -150,7 +151,7 @@ void	eat(t_philosopher *philo)
 	l_fork = (philo->id - 1 - (philo->id != 1));
 	lock_fork(&philo->forks[r_fork], philo);
 	lock_fork(&philo->forks[l_fork], philo);
-	messager(philo, "is eating");
+	messager(philo, "is eating", GREEN);
 	philo->last_meal = get_time();
 	sleeping_process(philo, data()->time_to_eat);
 	philo->eaten_meals += 1;
@@ -163,19 +164,23 @@ void	eat(t_philosopher *philo)
 
 void	go_sleep(t_philosopher *philo)
 {
-	messager(philo, "is sleeping");
+	messager(philo, "is sleeping", YELLOW);
 	sleeping_process(philo, data()->time_to_sleep);
 }
 
 void	*routine(void *philos)
 {
 	t_philosopher *philo = philos;
-	if (philo->id % 2 != 0)
+	//printf("ID: %d\n", philo->id);
+	//printf("eaten meals: %d\n", philo->eaten_meals);
+	//printf("must eat: %ld\n", data()->must_eat);
+	if (philo->id % 2 == 0)
 	{
 		think(philo);
 	}
-	while (philo->eaten_meals < data()->must_eat && check_death(philo) == false)
+	while (philo->eaten_meals < data()->must_eat && !check_death(philo))
 	{
+		//printf("AQUI\n");
 		eat(philo);
 		if (if_is_dead() == true)
 			return (NULL);

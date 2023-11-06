@@ -63,9 +63,9 @@ typedef struct s_philosopher
 typedef struct s_info
 {
 	long			n_philos;
-	u_int64_t		time_to_die;
-	u_int64_t		time_to_eat;
-	u_int64_t		time_to_sleep;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
 	long			must_eat;
 	u_int64_t		start_time;
 	int				dead;
@@ -79,11 +79,9 @@ typedef struct s_info
 //# define GREEN "\033[0;92m"
 # define YELLOW "\033[0;93m"
 
-
-t_info	*data(void);
-t_philosopher	*philo(void);
-
 int init_data(int ac, char **av);
+int	alloc(t_philosopher **philos);
+t_info	*data(void);
 
 //utils
 int			error(char *str);
@@ -96,5 +94,14 @@ int	get_time(void);
 
 int	start();
 
+bool	if_is_dead();
+void	*routine(void *philos);
+void	messager(t_philosopher *philo, char *msg, char *color);
+int	check_death(t_philosopher *philo);
+bool	if_is_dead();
+void	sleeping_process(t_philosopher *philo, uint64_t time);
+int	thread_starter(t_philosopher *philos);
+void	think(t_philosopher *philo);
+void	go_sleep(t_philosopher *philo);
 
 #endif

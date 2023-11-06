@@ -10,17 +10,23 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosophers
+NAME = philo
 
-CC = gcc
+CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g -pthread -fsanitize=thread
 
 SRC_PATH = ./
 
 OBJ_PATH = ./objects
 
-SRC_NAME = philosophers.c checker.c time.c init.c
+SRC_NAME =	philosophers.c \
+			checker.c \
+			time.c \
+			init.c \
+			routine.c \
+			dead_sleep.c \
+			utils.c
 
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
 

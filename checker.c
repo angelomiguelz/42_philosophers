@@ -12,12 +12,7 @@
 
 #include "philosophers.h"
 
-// create error handler
-int	error(char *str)
-{
-	printf("%s\n", str);
-	return (1);
-}
+
 
 int	check_input(int ac, char **av)
 {

@@ -87,5 +87,6 @@ int	thread_starter(t_philosopher *philos)
 	while (++i < data()->n_philos)
 		if (pthread_join(philos[i].philo, NULL))
 			return (1);
+	cleaning(data()->philo, data()->philo->forks);
 	return (0);
 }
